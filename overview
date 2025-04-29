@@ -1,0 +1,115 @@
+🎯 Project Objective:
+To design and implement a private cloud infrastructure offering compute resources (VMs), using Apache CloudStack without using any paid cloud services.
+
+💡 Key Features:
+Hypervisor-based VM provisioning
+
+User/Account management
+
+Self-service VM deployment
+
+Networking: VLANs, Port Forwarding
+
+Template and ISO-based VM creation
+
+🧰 Tools and Technologies:
+
+Tool	Purpose
+Apache CloudStack	Cloud orchestration platform
+KVM or VirtualBox	Hypervisor
+CentOS / Ubuntu	OS for management server and host
+NFS or Local Storage	Secondary & Primary storage
+MySQL / MariaDB	CloudStack backend DB
+VirtualBox / VMware	For local environment
+Optional: XCP-ng	Open-source hypervisor alternative to KVM
+🏗️ High-Level Architecture:
+Management Server: Runs Apache CloudStack management service
+
+Hypervisor Host: Runs virtual machines (KVM or VirtualBox with nested VM support)
+
+Storage Server: Provides primary & secondary storage via NFS
+
+Virtual Network: Isolated NAT-based networking using host-only adapters or bridges
+
+🔄 Implementation Steps:
+Step 1: Setup Virtual Environment
+Create 3 VMs in VirtualBox:
+
+CloudStack Manager
+
+KVM Host
+
+NFS Storage
+
+Step 2: Install Apache CloudStack Manager
+OS: CentOS 7 or Ubuntu 20.04
+
+Install required packages:
+
+bash
+Copy
+Edit
+yum install cloudstack-management mariadb-server -y
+Configure DB, setup CloudStack database schema:
+
+bash
+Copy
+Edit
+cloudstack-setup-databases cloud:cloud@localhost --deploy-as=root
+Start CloudStack services:
+
+bash
+Copy
+Edit
+systemctl start cloudstack-management
+Step 3: Configure the Hypervisor Host (KVM)
+Install KVM and required libvirt packages
+
+Enable nested virtualization if using VirtualBox
+
+Register the host with CloudStack via the web UI
+
+Step 4: Setup NFS Server
+Configure two NFS shares:
+
+Primary Storage
+
+Secondary Storage
+
+Mount these in the KVM host and register them in CloudStack UI
+
+Step 5: Access CloudStack UI
+Access http://<manager-ip>:8080/client
+
+Configure:
+
+Zones
+
+Pods
+
+Clusters
+
+Hosts
+
+Storage
+
+Step 6: Upload Template / ISO
+Add a minimal Linux ISO (like Alpine or Ubuntu Server)
+
+Use it to launch a VM via the CloudStack interface
+
+🎓 Learning Outcomes:
+Understanding of cloud orchestration concepts
+
+Hands-on experience with Apache CloudStack
+
+Knowledge of networking, storage, virtualization
+
+Experience in deploying self-hosted cloud infrastructure
+
+📦 Deliverables:
+Working cloud environment (screenshots/video)
+
+VM creation logs
+
+Project report / presentation (optional)
